@@ -2,18 +2,24 @@ from datetime import datetime as dt
 import enum
 import gitlab
 import requests
+import argparse
 
 def main():
-    GITLAB_URL=
-    ACCESS_TOKEN=
-    TELEGRAM_BOT_TOKEN=
-    TELEGRAM_CHAT_ID=
+    parser = argparse.ArgumentParser(
+                    prog='script for rotate GitLab access tokens',
+                    description='script for rotate GitLab access tokens')
+    
+    parser.add_argument('--gitlab-url', required=True)
+    parser.add_argument('--gitlab-token', required=True)
+    parser.add_argument('--telegram-bot-token', required=True)
+    parser.add_argument('--telegram-chat-id', required=True)
 
     telegram_message = "\U0001F525 FIRING \n"
     telegram_message += f"Host {GITLAB_URL} has issues with tokens:\n"
     telegram_message += "\n"
 
     try:
+        args = parser.parse_args()
         telegram_message += check_and_rotate_tokens(GITLAB_URL, ACCESS_TOKEN, TokenType.GroupAccessToken)
         telegram_message += check_and_rotate_tokens(GITLAB_URL, ACCESS_TOKEN, TokenType.ProjectAccessToken)
         send_to_telegram(TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, telegram_message)
