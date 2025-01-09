@@ -2,7 +2,7 @@
 
 GitLab access token rotation script.
 
-# Operating principle
+# How it works
 
 The script will run through all available groups and projects and check the expiration date of access tokens. If the token expires in less than 30 days, the script rotates it using the GitlLab API, generates a debug message and sends it to the Telegram bot.
 
