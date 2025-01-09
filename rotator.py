@@ -59,6 +59,7 @@ def check_and_rotate_tokens(gitlab_url: str, gitlab_token : str, token_type: Tok
             message = f"{first_message_word} access token {gl_rest_object_access_token.name} from {first_message_word.lower()} {gl_rest_object_name} expires at {gl_rest_object_access_token.expires_at}"
             print(message)
             if parsed_expired_at_date < parsed_today_date or diff_date <= 7:
+                gl_rest_object_access_token.rotate()
                 debug_message += message
                 debug_message += "\n"
 
