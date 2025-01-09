@@ -5,24 +5,25 @@ import requests
 import argparse
 
 def main():
-    parser = argparse.ArgumentParser(
-                    prog='script for rotate GitLab access tokens',
-                    description='script for rotate GitLab access tokens')
-    
-    parser.add_argument('--gitlab-url', required=True)
-    parser.add_argument('--gitlab-token', required=True)
-    parser.add_argument('--telegram-bot-token', required=True)
-    parser.add_argument('--telegram-chat-id', required=True)
-
-    telegram_message = "\U0001F525 FIRING \n"
-    telegram_message += f"Host {GITLAB_URL} has issues with tokens:\n"
-    telegram_message += "\n"
-
     try:
+        parser = argparse.ArgumentParser(
+                        prog='script for rotate GitLab access tokens',
+                        description='script for rotate GitLab access tokens')
+        
+        parser.add_argument('--gitlab-url', required=True)
+        parser.add_argument('--gitlab-token', required=True)
+        parser.add_argument('--telegram-bot-token', required=True)
+        parser.add_argument('--telegram-chat-id', required=True)
+
         args = parser.parse_args()
-        telegram_message += check_and_rotate_tokens(GITLAB_URL, ACCESS_TOKEN, TokenType.GroupAccessToken)
-        telegram_message += check_and_rotate_tokens(GITLAB_URL, ACCESS_TOKEN, TokenType.ProjectAccessToken)
-        send_to_telegram(TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, telegram_message)
+
+        telegram_message = "\U0001F525 FIRING \n"
+        telegram_message += f"Host {args.GITLAB_URL} has issues with tokens:\n"
+        telegram_message += "\n"
+
+        telegram_message += check_and_rotate_tokens(args.GITLAB_URL, args.GITLAB_TOKEN, TokenType.GroupAccessToken)
+        telegram_message += check_and_rotate_tokens(args.GITLAB_URL, args.GITLAB_TOKEN, TokenType.ProjectAccessToken)
+        send_to_telegram(args.TELEGRAM_BOT_TOKEN, args.TELEGRAM_CHAT_ID, telegram_message)
     except Exception:
         print("Error!")
 
