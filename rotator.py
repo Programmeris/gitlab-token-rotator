@@ -18,14 +18,14 @@ def main():
         args = parser.parse_args()
 
         telegram_message = "\U0001F525 FIRING \n"
-        telegram_message += f"Host {args.GITLAB_URL} has issues with tokens:\n"
+        telegram_message += f"Host {args.gitlab_url} has issues with tokens:\n"
         telegram_message += "\n"
 
-        telegram_message += check_and_rotate_tokens(args.GITLAB_URL, args.GITLAB_TOKEN, TokenType.GroupAccessToken)
-        telegram_message += check_and_rotate_tokens(args.GITLAB_URL, args.GITLAB_TOKEN, TokenType.ProjectAccessToken)
-        send_to_telegram(args.TELEGRAM_BOT_TOKEN, args.TELEGRAM_CHAT_ID, telegram_message)
-    except Exception:
-        print("Error!")
+        telegram_message += check_and_rotate_tokens(args.gitlab_url, args.gitlab_token, TokenType.GroupAccessToken)
+        telegram_message += check_and_rotate_tokens(args.gitlab_url, args.gitlab_token, TokenType.ProjectAccessToken)
+        send_to_telegram(args.telegram_bot_token, args.telegram_chat_id, telegram_message)
+    except Exception as err:
+        print(f"Unexpected {err=}, {type(err)=}")
 
 class TokenType(enum.Enum):
     GroupAccessToken = 0,
