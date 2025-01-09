@@ -1,4 +1,5 @@
 from datetime import datetime as dt
+from dateutil.relativedelta import relativedelta
 import enum
 import gitlab
 import requests
@@ -56,10 +57,11 @@ def check_and_rotate_tokens(gitlab_url: str, gitlab_token : str, token_type: Tok
         for gl_rest_object_access_token in gl_rest_objects_access_tokens:
             parsed_expired_at_date = dt.strptime(gl_rest_object_access_token.expires_at, "%Y-%m-%d")
             diff_date = abs((parsed_expired_at_date - parsed_today_date).days)
-            message = f"{first_message_word} access token {gl_rest_object_access_token.name} from {first_message_word.lower()} {gl_rest_object_name} expires at {gl_rest_object_access_token.expires_at}"
+            message = f"{first_message_word} access token {gl_rest_object_access_token.name} from {first_message_word.lower()} {gl_rest_object_name} expires at {gl_rest_object_access_token.expires_at}. Rotating..."
             print(message)
-            if parsed_expired_at_date < parsed_today_date or diff_date <= 7:
-                gl_rest_object_access_token.rotate()
+            if parsed_expired_at_date < parsed_today_date or diff_date <= 30:
+                new_token_expires_at = (parsed_today_date + relativedelta(years=1)).strftime('%Y-%m-%d')
+                gl_rest_object_access_token.rotate(expires_at=new_token_expires_at)
                 debug_message += message
                 debug_message += "\n"
 
