@@ -1,3 +1,4 @@
+"""Used modules"""
 import enum
 import gitlab
 import requests
@@ -6,6 +7,7 @@ from datetime import datetime as dt
 from dateutil.relativedelta import relativedelta
 
 def main():
+    """Simple script which rotate GitLab access tokens and send result to Telegram."""
     try:
         parser = argparse.ArgumentParser(
                         prog='script for rotate GitLab access tokens',
@@ -33,7 +35,7 @@ class TokenType(enum.Enum):
     PROJECT_ACCESS_TOKEN = 1
 
 def check_and_rotate_tokens(gitlab_url: str, gitlab_token : str, token_type: TokenType):
-
+    """Function which rotate GitLab access tokens."""
     gl = gitlab.Gitlab(url=gitlab_url, private_token=gitlab_token)
 
     today_date = dt.today().strftime('%Y-%m-%d')
@@ -68,6 +70,7 @@ def check_and_rotate_tokens(gitlab_url: str, gitlab_token : str, token_type: Tok
     return debug_message
 
 def send_to_telegram(telegram_bot_token: str, telegram_chat_id: str, telegram_message: str):
+    """Function which send message to Telegram."""
     send_url = f'https://api.telegram.org/bot{telegram_bot_token}/sendMessage'
 
     if telegram_message.count('\n') >= 4:
@@ -81,6 +84,7 @@ def send_to_telegram(telegram_bot_token: str, telegram_chat_id: str, telegram_me
         print('No token issues.')
 
 def divide_telegram_message(telegram_message: str):
+    """Function which divide Telegram message on two parts."""
     first_message_part = ''
     second_message_part = ''
 
