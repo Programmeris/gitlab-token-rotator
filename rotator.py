@@ -39,21 +39,21 @@ def check_and_rotate_tokens(gitlab_url: str, gitlab_token : str, token_type: Tok
     today_date = dt.today().strftime('%Y-%m-%d')
     parsed_today_date = dt.strptime(today_date, "%Y-%m-%d")
 
-    glRestObjects = []
+    gl_rest_objects = []
     debug_message=''
     first_message_word=''
 
     match token_type:
         case TokenType.GroupAccessToken:
-            glRestObjects = gl.groups.list(all=True)
+            gl_rest_objects = gl.groups.list(all=True)
             first_message_word='Group'
         case TokenType.ProjectAccessToken:
-            glRestObjects = gl.projects.list(all=True)
+            gl_rest_objects = gl.projects.list(all=True)
             first_message_word='Project'
 
-    for glRestObject in glRestObjects:
-        gl_rest_object_name = glRestObject.name
-        gl_rest_objects_access_tokens = glRestObject.access_tokens.list()
+    for gl_rest_object in gl_rest_objects:
+        gl_rest_object_name = gl_rest_object.name
+        gl_rest_objects_access_tokens = gl_rest_object.access_tokens.list()
         for gl_rest_object_access_token in gl_rest_objects_access_tokens:
             parsed_expired_at_date = dt.strptime(gl_rest_object_access_token.expires_at, "%Y-%m-%d")
             diff_date = abs((parsed_expired_at_date - parsed_today_date).days)
