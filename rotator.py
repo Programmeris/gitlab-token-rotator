@@ -22,15 +22,15 @@ def main():
         telegram_message += f"Host {args.gitlab_url} has issues with tokens:\n"
         telegram_message += "\n"
 
-        telegram_message += check_and_rotate_tokens(args.gitlab_url, args.gitlab_token, TokenType.GroupAccessToken)
-        telegram_message += check_and_rotate_tokens(args.gitlab_url, args.gitlab_token, TokenType.ProjectAccessToken)
+        telegram_message += check_and_rotate_tokens(args.gitlab_url, args.gitlab_token, TokenType.GROUP_ACCESS_TOKEN)
+        telegram_message += check_and_rotate_tokens(args.gitlab_url, args.gitlab_token, TokenType.PROJECT_ACCESS_TOKEN)
         send_to_telegram(args.telegram_bot_token, args.telegram_chat_id, telegram_message)
     except Exception as err:
         print(f"Unexpected {err=}, {type(err)=}")
 
 class TokenType(enum.Enum):
-    GroupAccessToken = 0,
-    ProjectAccessToken = 1
+    GROUP_ACCESS_TOKEN = 0,
+    PROJECT_ACCESS_TOKEN = 1
 
 def check_and_rotate_tokens(gitlab_url: str, gitlab_token : str, token_type: TokenType):
 
@@ -44,10 +44,10 @@ def check_and_rotate_tokens(gitlab_url: str, gitlab_token : str, token_type: Tok
     first_message_word=''
 
     match token_type:
-        case TokenType.GroupAccessToken:
+        case TokenType.GROUP_ACCESS_TOKEN:
             gl_rest_objects = gl.groups.list(all=True)
             first_message_word='Group'
-        case TokenType.ProjectAccessToken:
+        case TokenType.PROJECT_ACCESS_TOKEN:
             gl_rest_objects = gl.projects.list(all=True)
             first_message_word='Project'
 
