@@ -1,9 +1,9 @@
-from datetime import datetime as dt
-from dateutil.relativedelta import relativedelta
 import enum
 import gitlab
 import requests
 import argparse
+from datetime import datetime as dt
+from dateutil.relativedelta import relativedelta
 
 def main():
     try:
