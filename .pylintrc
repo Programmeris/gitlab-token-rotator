@@ -1,2 +1,4 @@
 [FORMAT]
 max-line-length=240
+[DESIGN]
+max-locals = 20
