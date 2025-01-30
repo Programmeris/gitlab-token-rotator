@@ -30,6 +30,7 @@ def main():
     except Exception as err:
         print(f"Unexpected {err=}, {type(err)=}")
 
+"""Enum whick represents GitLab access tokens types"""
 class TokenType(enum.Enum):
     GROUP_ACCESS_TOKEN = 0,
     PROJECT_ACCESS_TOKEN = 1
