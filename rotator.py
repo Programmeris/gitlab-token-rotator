@@ -12,7 +12,7 @@ def main():
         parser = argparse.ArgumentParser(
                         prog='script for rotate GitLab access tokens',
                         description='script for rotate GitLab access tokens')
-        
+
         parser.add_argument('--gitlab-url', required=True)
         parser.add_argument('--gitlab-token', required=True)
         parser.add_argument('--telegram-bot-token', required=True)
@@ -80,7 +80,7 @@ def send_to_telegram(telegram_bot_token: str, telegram_chat_id: str, telegram_me
             requests.post(send_url, json={'chat_id': telegram_chat_id, 'text': divided_telegram_message[1]}, timeout=10)
         else:
             requests.post(send_url, json={'chat_id': telegram_chat_id, 'text': telegram_message}, timeout=10)
-    else: 
+    else:
         print('No token issues.')
 
 def divide_telegram_message(telegram_message: str):
