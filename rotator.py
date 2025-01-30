@@ -29,9 +29,9 @@ def main():
         send_to_telegram(args.telegram_bot_token, args.telegram_chat_id, telegram_message)
     except Exception as err:
         print(f"Unexpected {err=}, {type(err)=}")
-
-"""Enum whick represents GitLab access tokens types"""
+        
 class TokenType(enum.Enum):
+"""Enum whick represents GitLab access tokens types"""
     GROUP_ACCESS_TOKEN = 0,
     PROJECT_ACCESS_TOKEN = 1
 
